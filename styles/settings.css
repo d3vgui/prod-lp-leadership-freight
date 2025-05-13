@@ -81,7 +81,7 @@ html {
   margin-right: 10px;
 }
 
-.top-header .social-top-header {
+.top-header .social-top-header ul {
   display: flex;
   gap: 15px;
 }
