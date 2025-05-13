@@ -72,8 +72,8 @@ html {
   font-size: 14px;
 }
 
-.top-header .top-header-contact {
-  display: flex;
+.top-header .top-header-contact ul{
+  display: flex ;
   gap: 15px;
 }
 
