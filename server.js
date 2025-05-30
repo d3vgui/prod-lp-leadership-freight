@@ -12,6 +12,10 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('Back-end está funcionando!');
+});
+
 app.post("/send-email", async (req, res) => {
   const { name, email, phone, subject, message } = req.body;
 
