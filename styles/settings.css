@@ -72,8 +72,8 @@ html {
   font-size: 14px;
 }
 
-.top-header .top-header-contact ul{
-  display: flex ;
+.top-header .top-header-contact ul {
+  display: flex;
   gap: 15px;
 }
 
@@ -315,7 +315,6 @@ footer .logo-footer {
 
 footer .logo-footer img {
   width: 280px;
-  background-color: var(--white);
 }
 
 footer .content-footer ul {
@@ -386,5 +385,11 @@ footer .dev i {
 
   footer li {
     width: 80vw;
+  }
+}
+
+@media (max-width: 577px) {
+  footer .dev {
+    justify-content: center;
   }
 }

@@ -1,22 +1,73 @@
-document.querySelector('#contactForm').addEventListener('submit', function(event) {
+document.querySelector('#contactForm').addEventListener('submit', async function (event) {
   event.preventDefault();
 
-  const formData = new FormData(this);
+  const form = this;
+  const formData = new FormData(form);
   const formProps = Object.fromEntries(formData);
 
-  const message = `Olá! Vim pelo site e gostaria de fazer um orçamento.
+  const btnSubmitContainer = form.querySelector('.btn-submit');
+  const submitButton = btnSubmitContainer.querySelector('button');
 
-Segue abaixo minhas informações:
+  let feedbackButton = btnSubmitContainer.querySelector('.feedback-button');
+  if (!feedbackButton) {
+    feedbackButton = document.createElement('div');
+    feedbackButton.classList.add('feedback-button');
+    feedbackButton.style.display = 'none';
+    feedbackButton.style.padding = '12px 24px';
+    feedbackButton.style.borderRadius = '4px';
+    feedbackButton.style.fontWeight = 'bold';
+    feedbackButton.style.textAlign = 'center';
+    feedbackButton.style.transition = 'all 0.4s ease';
+    feedbackButton.style.margin = '20px 0 0 0'
+    btnSubmitContainer.appendChild(feedbackButton);
+  }
 
-Nome: ${formProps.name}
-E-mail: ${formProps.email}
-Celular: ${formProps.phone}
-Assunto: ${formProps.subject}
+  submitButton.style.transition = 'opacity 0.4s ease';
+  submitButton.style.opacity = '0';
 
-Mensagem:
-${formProps.message}`;
+  setTimeout(() => {
+    submitButton.style.display = 'none';
+    feedbackButton.style.display = 'block';
+    feedbackButton.style.opacity = '0';
+  }, 400);
 
-  const whatsappURL = `https://api.whatsapp.com/send?phone=5511975721243&text=${encodeURIComponent(message)}`;
+  try {
+    const response = await fetch('http://lfgex.com:3000/send-email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formProps),
+    });
 
-  window.open(whatsappURL, '_blank');
+    if (response.ok) {
+      feedbackButton.textContent = 'E-mail enviado com sucesso!';
+      feedbackButton.style.backgroundColor = '#28a745';
+    } else {
+      feedbackButton.textContent = 'Não foi possível enviar o e-mail.';
+      feedbackButton.style.backgroundColor = '#dc3545';
+    }
+  } catch (error) {
+    console.error('Erro:', error);
+    feedbackButton.textContent = 'Erro ao enviar e-mail.';
+    feedbackButton.style.backgroundColor = '#dc3545';
+  }
+
+  feedbackButton.style.color = '#fff';
+  feedbackButton.style.cursor = 'default';
+  feedbackButton.style.opacity = '1';
+
+  if (formProps) form.reset();
+
+  setTimeout(() => {
+    feedbackButton.style.opacity = '0';
+    setTimeout(() => {
+      feedbackButton.style.display = 'none';
+      submitButton.style.display = 'inline-block';
+      submitButton.style.opacity = '0';
+      setTimeout(() => {
+        submitButton.style.opacity = '1';
+      }, 10);
+    }, 400);
+  }, 2000);
 });

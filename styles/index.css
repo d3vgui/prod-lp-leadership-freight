@@ -504,6 +504,12 @@
   width: 100%;
 }
 
+.btn-submit button,
+.feedback-button {
+  transition: opacity 0.4s ease;
+}
+
+
 #section-seven form label {
   color: var(--white);
   margin-bottom: 15px;
