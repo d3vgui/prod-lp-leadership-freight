@@ -32,7 +32,7 @@ document.querySelector('#contactForm').addEventListener('submit', async function
   }, 400);
 
   try {
-    const response = await fetch('http://lfgex.com:3000/send-email', {
+    const response = await fetch('/send-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
