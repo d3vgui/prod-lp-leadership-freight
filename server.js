@@ -26,13 +26,13 @@ app.post("/send-email", async (req, res) => {
   const transporter = nodemailer.createTransport({
     host: "smtp.office365.com",
     port: 587,
-    secure: false, // STARTTLS
+    secure: false,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
     tls: {
-      rejectUnauthorized: true, // mais seguro; mude para false só se necessário
+      rejectUnauthorized: true,
     },
   });
 
@@ -73,6 +73,7 @@ const options = {
   cert: fs.readFileSync("/etc/letsencrypt/live/lfgex.com/fullchain.pem"),
 };
 
-https.createServer(options, app).listen(PORT, () => {
-  console.log(`Servidor HTTPS no ar na porta ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
+
