@@ -32,6 +32,7 @@ app.post("/send-email", async (req, res) => {
       pass: process.env.EMAIL_PASS,
     },
     tls: {
+      ciphers: 'SSLv3',
       rejectUnauthorized: true,
     },
   });
