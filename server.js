@@ -3,8 +3,8 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
-const https = require('https');
-const fs = require('fs');
+const https = require("https");
+const fs = require("fs");
 
 dotenv.config();
 
@@ -16,8 +16,8 @@ app.use(express.json());
 
 app.use(express.static(__dirname));
 
-app.get('/api', (req, res) => {
-  res.send('Back-end está funcionando!');
+app.get("/api", (req, res) => {
+  res.send("Back-end está funcionando!");
 });
 
 app.post("/send-email", async (req, res) => {
@@ -26,14 +26,13 @@ app.post("/send-email", async (req, res) => {
   const transporter = nodemailer.createTransport({
     host: "smtp.office365.com",
     port: 587,
-    secure: false,
+    secure: false, // STARTTLS
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
     tls: {
-      ciphers: "SSLv3",
-      rejectUnauthorized: false,
+      rejectUnauthorized: true, // mais seguro; mude para false só se necessário
     },
   });
 
@@ -70,10 +69,10 @@ app.post("/send-email", async (req, res) => {
 });
 
 const options = {
-key: fs.readFileSync('/etc/letsencrypt/live/lfgex.com/privkey.pem'),
-cert: fs.readFileSync('/etc/letsencrypt/live/lfgex.com/fullchain.pem')
+  key: fs.readFileSync("/etc/letsencrypt/live/lfgex.com/privkey.pem"),
+  cert: fs.readFileSync("/etc/letsencrypt/live/lfgex.com/fullchain.pem"),
 };
 
 https.createServer(options, app).listen(PORT, () => {
-console.log(`Servidor HTTPS no ar na porta ${PORT}`);
-}); 
+  console.log(`Servidor HTTPS no ar na porta ${PORT}`);
+});
