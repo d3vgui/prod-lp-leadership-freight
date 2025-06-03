@@ -3,6 +3,8 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
+const https = require('https');
+const fs = require('fs');
 
 dotenv.config();
 
@@ -67,6 +69,11 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+const options = {
+key: fs.readFileSync('/etc/letsencrypt/live/lfgex.com/privkey.pem'),
+cert: fs.readFileSync('/etc/letsencrypt/live/lfgex.com/fullchain.pem')
+};
+
+https.createServer(options, app).listen(PORT, () => {
+console.log(`Servidor HTTPS no ar na porta ${PORT}`);
+}); 
