@@ -350,6 +350,10 @@
   height: 100px;
 }
 
+#section-four .adjustmentHeight .accordion-inner{
+  height: 270px;
+}
+
 /* SECTION FIVE */
 
 #section-five {
