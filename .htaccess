@@ -1,9 +1,4 @@
 RewriteEngine On
-
-# Forçar HTTPS
-RewriteCond %{HTTPS} off
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-# Redirecionar sem www para www
 RewriteCond %{HTTP_HOST} ^lfgex\.com$ [NC]
 RewriteRule ^(.*)$ https://www.lfgex.com/$1 [L,R=301]
+
